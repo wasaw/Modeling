@@ -26,7 +26,6 @@ final class InfectedViewController: UIViewController {
     private let groupSize: Int
     private let infectionFactor: Int
     private let timeInterval: Int
-    private var isStartTimer = true
     private var timer: Timer?
     private var maxSections = 0
     private let itemsPerSection = 5
