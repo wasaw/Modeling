@@ -54,6 +54,7 @@ final class InputViewController: UIViewController {
         let btn = UIButton(type: .custom)
         btn.setTitle("Моделировать", for: .normal)
         btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 23)
+        btn.addTarget(self, action: #selector(handleInputButton), for: .touchUpInside)
         btn.layer.cornerRadius = Constants.buttonCornerRadius
         btn.backgroundColor = .buttonBackground
         return btn
@@ -151,6 +152,17 @@ final class InputViewController: UIViewController {
         }
     }
     
+    private func isInputValues() -> Bool {
+        guard let groupText = groupSizeTextField.text,
+              let _ = Int(groupText),
+              let infectionText = infectionFactorTextField.text,
+              let _ = Int(infectionText),
+              let durationText = durationTextField.text,
+              let _ = Int(durationText) else { return false }
+        
+        return true
+    }
+    
 // MARK: - Selectors
     
     @objc private func dismissKeyboard() {
@@ -158,6 +170,17 @@ final class InputViewController: UIViewController {
         view.endEditing(true)
         UIView.animate(withDuration: 0.7) { [weak self] in
             self?.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc private func handleInputButton() {
+        if isInputValues() {
+            navigationController?.pushViewController(InfectedViewController(), animated: true)
+        } else {
+            let alert = UIAlertController(title: "Внимание", message: "Все введенные значения должны быть целыми числами", preferredStyle: .alert)
+            let okButton = UIAlertAction(title: "Ок", style: .default)
+            alert.addAction(okButton)
+            present(alert, animated: true)
         }
     }
 }

@@ -12,13 +12,23 @@ final class InfectedViewCell: UICollectionViewCell {
     
 // MARK: - Lifecycle
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        layer.cornerRadius = 8
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func prepareForReuse() {
-        backgroundColor = .gray
+        backgroundColor = .cellBackground
     }
     
 // MARK: - Helpers
     
     func setInfected(_ isInfected: Bool) {
-        backgroundColor = isInfected ? .blue : .gray
+        backgroundColor = isInfected ? .cellInfectedBackground : .cellBackground
     }
 }
