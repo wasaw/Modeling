@@ -43,3 +43,58 @@ extension UIView {
         }
     }
 }
+
+// MARK: - Color
+
+extension UIColor {
+    static let background = UIColor { traitCollection in
+        switch traitCollection.userInterfaceStyle {
+        case .light, .unspecified:
+            UIColor(red: 255/255, green: 238/255, blue: 219/255, alpha: 1)
+        case .dark:
+            UIColor(red: 255/255, green: 238/255, blue: 219/255, alpha: 1)
+        @unknown default:
+            UIColor(red: 255/255, green: 238/255, blue: 219/255, alpha: 1)
+        }
+    }
+    static let logoBackground = UIColor { traitCollection in
+        switch traitCollection.userInterfaceStyle {
+        case .light, .unspecified:
+            UIColor(red: 47/255, green: 68/255, blue: 162/255, alpha: 1)
+        case .dark:
+            UIColor(red: 47/255, green: 68/255, blue: 162/255, alpha: 1)
+        @unknown default:
+            UIColor(red: 47/255, green: 68/255, blue: 162/255, alpha: 1)
+        }
+    }
+    static let buttonBackground = UIColor { traitCollection in
+        switch traitCollection.userInterfaceStyle {
+        case .light, .unspecified:
+            UIColor(red: 225/255, green: 124/255, blue: 16/255, alpha: 1)
+        case .dark:
+            UIColor(red: 225/255, green: 124/255, blue: 16/255, alpha: 1)
+        @unknown default:
+            UIColor(red: 225/255, green: 124/255, blue: 16/255, alpha: 1)
+        }
+    }
+}
+
+// MARK: - UITextField
+
+extension UITextField {
+    class func modelingParamenter(placeholder: String) -> UITextField {
+        lazy var groupSizeTextField: UITextField = {
+            let tf = UITextField()
+            tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
+            let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+            tf.leftView = paddingView
+            tf.leftViewMode = .always
+            tf.layer.borderWidth = 0.7
+            tf.layer.borderColor = UIColor.logoBackground.cgColor
+            tf.layer.cornerRadius = 8
+            tf.keyboardType = .numberPad
+            return tf
+        }()
+        return groupSizeTextField
+    }
+}
