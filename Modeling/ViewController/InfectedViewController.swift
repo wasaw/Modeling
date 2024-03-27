@@ -11,7 +11,7 @@ private enum Constants {
     static let cellDimensions: CGFloat = 60
     static let sectionPadding: CGFloat = 10
     static let minimumLineSpacing: CGFloat = 10
-    static let infoViewHeight: CGFloat = 270
+    static let infoViewHeight: CGFloat = 250
     static let infoViewCornerRadius: CGFloat = 20
     static let collectionViewPaddingTop: CGFloat = 25
     static let quantityWidth: CGFloat = 120
@@ -23,13 +23,15 @@ final class InfectedViewController: UIViewController {
     
 // MARK: - Properties
     
-    private let groupSize = 26
-    private let infectionFactor = 5
-    private let timeInterval = 0
+    private let groupSize: Int
+    private let infectionFactor: Int
+    private let timeInterval: Int
     private var isStartTimer = true
+    private var timer: Timer?
     private var maxSections = 0
     private let itemsPerSection = 5
     private var infectedPerson: Set<Person> = []
+    private var allInfectedPerson: Set<Person> = []
     private var grid: [[Person]] = []
     
     private lazy var quantityOfHealthyLabel: UILabel = {
@@ -80,12 +82,30 @@ final class InfectedViewController: UIViewController {
     
 // MARK: - Lifecycle
     
+    init(groupSize: Int, infectionFactor: Int, timeInterval: Int) {
+        self.groupSize = groupSize
+        self.infectionFactor = infectionFactor
+        self.timeInterval = timeInterval
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         maxSections = Int(ceil(Double(groupSize) / Double(itemsPerSection)))
         setupGrid()
         configureUI()
+        drawInfectedViews()
+    }
+    
+    deinit {
+        timer?.invalidate()
+        timer = nil
     }
     
 // MARK: - Helpers
@@ -94,7 +114,8 @@ final class InfectedViewController: UIViewController {
         var id = 0
         for i in 0..<maxSections {
             var row: [Person] = []
-            for j in 0..<itemsPerSection {
+            let itemInRow = (i == maxSections - 1) ? (groupSize - (i * itemsPerSection)) : itemsPerSection
+            for j in 0..<itemInRow {
                 row.append(Person(id: id, column: i, row: j))
                 id += 1
             }
@@ -157,13 +178,15 @@ final class InfectedViewController: UIViewController {
         grid[index.section][index.row].isInfected = true
         let selectedPerson = grid[index.section][index.row]
         infectedPerson.insert(selectedPerson)
+        allInfectedPerson.insert(selectedPerson)
         let neighbors = [
             (index.section, index.row - 1),
             (index.section, index.row + 1),
             (index.section - 1, index.row),
             (index.section + 1, index.row)
         ].compactMap { (c, r) -> Person? in
-            guard c >= 0 && c < maxSections && r >= 0 && r < itemsPerSection else { return nil }
+            let itemInRow = (c == maxSections - 1) ? (groupSize - (c * itemsPerSection)) : itemsPerSection
+            guard c >= 0 && c < maxSections && r >= 0 && r < itemInRow else { return nil }
             return grid[c][r]
         }
         
@@ -177,16 +200,16 @@ final class InfectedViewController: UIViewController {
     }
     
     private func drawInfectedViews() {
-        Timer.scheduledTimer(withTimeInterval: TimeInterval(timeInterval), repeats: false) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(timeInterval), repeats: true) { [weak self] _ in
             self?.collectionView.reloadData()
             self?.setHumanData()
         }
     }
     
     private func setHumanData() {
-        let quantityOfHealthy = groupSize - infectedPerson.count
+        let quantityOfHealthy = groupSize - allInfectedPerson.count
         quantityOfHealthyLabel.text = String(quantityOfHealthy)
-        quantityOfInfectedLabel.text = String(infectedPerson.count)
+        quantityOfInfectedLabel.text = String(allInfectedPerson.count)
         
         UIView.animate(withDuration: 0.7) { [weak self] in
             self?.quantityOfHealthyView.layer.opacity = 1
@@ -204,13 +227,12 @@ final class InfectedViewController: UIViewController {
 extension InfectedViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? InfectedViewCell else { return }
+        cell.setInfected(true)
         
         infectedPerson = []
-        humanInfection(indexPath)
-
-        if isStartTimer {
-            drawInfectedViews()
-            isStartTimer = false
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self?.humanInfection(indexPath)
         }
     }
 }

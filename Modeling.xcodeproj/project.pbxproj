@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		BB667B0D2BB0129B00DA11F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB667B0C2BB0129B00DA11F4 /* AppDelegate.swift */; };
 		BB667B0F2BB0129B00DA11F4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB667B0E2BB0129B00DA11F4 /* SceneDelegate.swift */; };
-		BB667B112BB0129B00DA11F4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB667B102BB0129B00DA11F4 /* ViewController.swift */; };
 		BB667B162BB0129D00DA11F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB667B152BB0129D00DA11F4 /* Assets.xcassets */; };
 		BB667B192BB0129D00DA11F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB667B172BB0129D00DA11F4 /* LaunchScreen.storyboard */; };
 		BB667B242BB031B300DA11F4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB667B232BB031B300DA11F4 /* Extensions.swift */; };
-		BB667B2D2BB1A00B00DA11F4 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB667B2C2BB1A00A00DA11F4 /* CollectionViewController.swift */; };
 		BB667B312BB1AA1E00DA11F4 /* InfectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB667B302BB1AA1E00DA11F4 /* InfectedViewController.swift */; };
 		BB667B332BB1B0AF00DA11F4 /* InfectedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB667B322BB1B0AF00DA11F4 /* InfectedViewCell.swift */; };
 		BB667B352BB2E4BC00DA11F4 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB667B342BB2E4BC00DA11F4 /* Model.swift */; };
@@ -24,12 +22,10 @@
 		BB667B092BB0129B00DA11F4 /* Modeling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Modeling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB667B0C2BB0129B00DA11F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB667B0E2BB0129B00DA11F4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		BB667B102BB0129B00DA11F4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BB667B152BB0129D00DA11F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB667B182BB0129D00DA11F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BB667B1A2BB0129D00DA11F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB667B232BB031B300DA11F4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		BB667B2C2BB1A00A00DA11F4 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		BB667B302BB1AA1E00DA11F4 /* InfectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfectedViewController.swift; sourceTree = "<group>"; };
 		BB667B322BB1B0AF00DA11F4 /* InfectedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfectedViewCell.swift; sourceTree = "<group>"; };
 		BB667B342BB2E4BC00DA11F4 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -67,13 +63,10 @@
 			isa = PBXGroup;
 			children = (
 				BB667B202BB013D100DA11F4 /* App */,
+				BB667B392BB461B500DA11F4 /* Model */,
+				BB667B3A2BB461C100DA11F4 /* View */,
+				BB667B382BB4619C00DA11F4 /* ViewController */,
 				BB667B252BB031C000DA11F4 /* Utils */,
-				BB667B102BB0129B00DA11F4 /* ViewController.swift */,
-				BB667B302BB1AA1E00DA11F4 /* InfectedViewController.swift */,
-				BB667B362BB2F1A700DA11F4 /* InputViewController.swift */,
-				BB667B342BB2E4BC00DA11F4 /* Model.swift */,
-				BB667B322BB1B0AF00DA11F4 /* InfectedViewCell.swift */,
-				BB667B2C2BB1A00A00DA11F4 /* CollectionViewController.swift */,
 				BB667B152BB0129D00DA11F4 /* Assets.xcassets */,
 				BB667B172BB0129D00DA11F4 /* LaunchScreen.storyboard */,
 				BB667B1A2BB0129D00DA11F4 /* Info.plist */,
@@ -96,6 +89,31 @@
 				BB667B232BB031B300DA11F4 /* Extensions.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		BB667B382BB4619C00DA11F4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BB667B362BB2F1A700DA11F4 /* InputViewController.swift */,
+				BB667B302BB1AA1E00DA11F4 /* InfectedViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		BB667B392BB461B500DA11F4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BB667B342BB2E4BC00DA11F4 /* Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BB667B3A2BB461C100DA11F4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BB667B322BB1B0AF00DA11F4 /* InfectedViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,10 +187,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB667B372BB2F1A700DA11F4 /* InputViewController.swift in Sources */,
-				BB667B2D2BB1A00B00DA11F4 /* CollectionViewController.swift in Sources */,
 				BB667B242BB031B300DA11F4 /* Extensions.swift in Sources */,
 				BB667B312BB1AA1E00DA11F4 /* InfectedViewController.swift in Sources */,
-				BB667B112BB0129B00DA11F4 /* ViewController.swift in Sources */,
 				BB667B332BB1B0AF00DA11F4 /* InfectedViewCell.swift in Sources */,
 				BB667B0D2BB0129B00DA11F4 /* AppDelegate.swift in Sources */,
 				BB667B0F2BB0129B00DA11F4 /* SceneDelegate.swift in Sources */,

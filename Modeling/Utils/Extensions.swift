@@ -80,12 +80,11 @@ extension UIColor {
     static let cellBackground = UIColor { traitCollection in
         switch traitCollection.userInterfaceStyle {
         case .light, .unspecified:
-//            UIColor(red: 110/255, green: 118/255, blue: 172/255, alpha: 1)
             UIColor(red: 142/255, green: 195/255, blue: 255/255, alpha: 1)
         case .dark:
-            UIColor(red: 110/255, green: 118/255, blue: 172/255, alpha: 1)
+            UIColor(red: 142/255, green: 195/255, blue: 255/255, alpha: 1)
         @unknown default:
-            UIColor(red: 110/255, green: 118/255, blue: 172/255, alpha: 1)
+            UIColor(red: 142/255, green: 195/255, blue: 255/255, alpha: 1)
         }
     }
     static let cellInfectedBackground = UIColor { traitCollection in

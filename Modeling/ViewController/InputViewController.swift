@@ -8,7 +8,7 @@
 import UIKit
 
 private enum Constants {
-    static let logoViewHeight: CGFloat = 270
+    static let logoViewHeight: CGFloat = 250
     static let logoCornerRadius: CGFloat = 20
     static let horizontalPadding: CGFloat = 10
     static let textFieldTopPadding: CGFloat = 15
@@ -16,8 +16,8 @@ private enum Constants {
     static let buttonBottomPadding: CGFloat = 30
     static let buttonHeight: CGFloat = 90
     static let buttonCornerRadius: CGFloat = 16
-    static let groupSizeLessConstraint: CGFloat = 20
-    static let groupSizeMoreConstraint: CGFloat = 95
+    static let groupSizeLessConstraint: CGFloat = 40
+    static let groupSizeMoreConstraint: CGFloat = 115
 }
 
 private enum AnimationsViews {
@@ -43,7 +43,7 @@ final class InputViewController: UIViewController {
         view.backgroundColor = .logoBackground
         return view
     }()
-    private let groupPlaceholder = "Количество людей в моделируемой группе"
+    private let groupPlaceholder = "Количество людей в группе"
     private let infectionPlaceholder = "Заражение при контакте"
     private let durationplaceholder = "Период пересчета"
     
@@ -52,7 +52,7 @@ final class InputViewController: UIViewController {
     private lazy var durationTextField = UITextField.modelingParamenter(placeholder: durationplaceholder)
     private lazy var inputButton: UIButton = {
         let btn = UIButton(type: .custom)
-        btn.setTitle("Моделировать", for: .normal)
+        btn.setTitle("Запустить моделирование", for: .normal)
         btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 23)
         btn.addTarget(self, action: #selector(handleInputButton), for: .touchUpInside)
         btn.layer.cornerRadius = Constants.buttonCornerRadius
@@ -152,15 +152,11 @@ final class InputViewController: UIViewController {
         }
     }
     
-    private func isInputValues() -> Bool {
-        guard let groupText = groupSizeTextField.text,
-              let _ = Int(groupText),
-              let infectionText = infectionFactorTextField.text,
-              let _ = Int(infectionText),
-              let durationText = durationTextField.text,
-              let _ = Int(durationText) else { return false }
-        
-        return true
+    private func showAlert() {
+        let alert = UIAlertController(title: "Внимание", message: "Все введенные значения должны быть целыми числами", preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "Ок", style: .default)
+        alert.addAction(okButton)
+        present(alert, animated: true)
     }
     
 // MARK: - Selectors
@@ -174,14 +170,19 @@ final class InputViewController: UIViewController {
     }
     
     @objc private func handleInputButton() {
-        if isInputValues() {
-            navigationController?.pushViewController(InfectedViewController(), animated: true)
-        } else {
-            let alert = UIAlertController(title: "Внимание", message: "Все введенные значения должны быть целыми числами", preferredStyle: .alert)
-            let okButton = UIAlertAction(title: "Ок", style: .default)
-            alert.addAction(okButton)
-            present(alert, animated: true)
+        guard let groupText = groupSizeTextField.text,
+              let group = Int(groupText),
+              let infectionText = infectionFactorTextField.text,
+              let infection = Int(infectionText),
+              let durationText = durationTextField.text,
+              let duration = Int(durationText) else {
+            showAlert()
+            return
         }
+        
+        navigationController?.pushViewController(InfectedViewController(groupSize: group,
+                                                                        infectionFactor: infection,
+                                                                        timeInterval: duration), animated: true)
     }
 }
 
